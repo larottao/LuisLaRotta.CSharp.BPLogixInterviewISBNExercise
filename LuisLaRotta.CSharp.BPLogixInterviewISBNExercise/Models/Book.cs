@@ -17,7 +17,7 @@ using System.Collections.Generic;
 namespace LuisLaRotta.CSharp.BPLogixInterviewISBNExercise.Models
 {
     public enum DataRetrievalType
-    { Server, Cache }
+    { Server, Cache, Failed }
 
     public class Book
     {

@@ -114,7 +114,16 @@ namespace LuisLaRotta.CSharp.BPLogixInterviewISBNExercise.Services
                     Book bookOnline = getBookFromWebservice(isbnCode).Result;
                     bookOnline.rowNumber = rowNumber;
                     bookOnline.Isbn = isbnCode;
-                    bookOnline.DataRetrievalType = DataRetrievalType.Server;
+
+                    if (bookOnline.OnlineRetrieveSuccess)
+                    {
+                        bookOnline.DataRetrievalType = DataRetrievalType.Server;
+                    }
+                    else
+                    {
+                        bookOnline.DataRetrievalType = DataRetrievalType.Failed;
+                    }
+
                     resultsListForUser.Add(bookOnline);
 
                     //**************************************************
@@ -141,7 +150,7 @@ namespace LuisLaRotta.CSharp.BPLogixInterviewISBNExercise.Services
 
             saveCsvOnDisk(selectedFile, resultsAsCsv, 0);
 
-            return resultsAsCsv;
+            return "End of process.";
         }
 
         public Tuple<bool, string> launchSelectISBNFileDialog()
@@ -296,6 +305,7 @@ namespace LuisLaRotta.CSharp.BPLogixInterviewISBNExercise.Services
                 catch
                 {
                     //Unable to concatenate author names
+                    concatenatedAuthors = "N/A";
                 }
 
                 sb.Append($"{element.rowNumber}|{element.DataRetrievalType}|{element.Isbn}|{element.Title}|{element.Subtitle}|{concatenatedAuthors}|{element.NumberOfPages}|{element.PublishDate}" + Environment.NewLine);

@@ -19,7 +19,7 @@ namespace LuisLaRotta.CSharp.BPLogixInterviewISBNExercise
     {
         private static void Main(string[] args)
         {
-            new BookOpsService().mainProcess(args);
+            Console.WriteLine(new BookOpsService().mainProcess(args));
 
             Console.WriteLine("Press any key to exit...");
 

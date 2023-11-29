@@ -14,15 +14,20 @@ namespace LuisLaRotta.CSharp.BPLogixInterviewISBNExercise
                 {
                     HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-                    if (response.IsSuccessStatusCode)
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         String contents = await response.Content.ReadAsStringAsync();
+
+                        if (String.IsNullOrEmpty(contents) || contents.Equals("[]"))
+                        {
+                            return new Tuple<Boolean, String>(false, "Empty response from server");
+                        }
 
                         return new Tuple<Boolean, String>(true, contents);
                     }
                     else
                     {
-                        return new Tuple<Boolean, String>(false, response.StatusCode.ToString());
+                        return new Tuple<Boolean, String>(false, response.ReasonPhrase);
                     }
                 }
             }
